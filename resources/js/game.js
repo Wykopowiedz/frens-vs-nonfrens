@@ -57,9 +57,15 @@ function game() {
     console.log("currentFren")
     console.log(currentFren)
 
-    isVictory = fight(currentFren, currentEnemy)
-    console.log("isVictory")
-    console.log(isVictory)
+    let fight = () => {
+        console.log("currentFren")
+        console.log(currentFren)
+
+        isVictory = isVictory(currentFren, currentEnemy)
+        console.log("isVictory")
+        console.log(isVictory)
+    }
+    setTimeout(fight, sleepMillis);
 }
 
 function randomEnemy() {
@@ -68,16 +74,22 @@ function randomEnemy() {
     return enemies[id];
 }
 
-function fight(fren, enemy) {
+function isVictory(fren, enemy) {
     return fren.power + enemy.power == 0;
 }
 
 function setCurrentEnemy(enemy)  {
+    hoverCroop(enemy)
     this.currentEnemy = enemy
 }
 
 function setCurrentFren(fren)  {
+    hoverCroop(enemy)
     this.currentFren = fren
+}
+
+function hoverCroop(elem) {
+    //elem:hover
 }
 
 async function sleep(delay) {
