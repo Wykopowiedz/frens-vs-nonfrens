@@ -69,9 +69,9 @@ function game() {
 }
 
 function randomEnemy() {
-    const enemySize = Object.keys(enemies).length;
+    const enemySize = Object.keys(enemiesArr).length;
     const id = Math.floor(Math.random() * enemySize);
-    return enemies[id];
+    return enemiesArr[id];
 }
 
 function isVictory(fren, enemy) {
