@@ -33,7 +33,7 @@ const enemiesArr = [enemies.POLKA, enemies.HONKHONK, enemies.CHAD]
 // var ------------------------------------------------------------
 var currentEnemy
 var currentFren
-var win = 0
+var winScore = 0
 var isLost = false
 
 
@@ -53,6 +53,10 @@ hammer_div.addEventListener('click', function() {
 gun_div.addEventListener('click', function() {
     setCurrentFren(frens.GUN)
 })
+
+function hoverElem(elem) {
+    //elem:hover
+}
 
 
 // backend --------------------------------------------------------
@@ -74,6 +78,21 @@ function battle() {
     setTimeout(fight, sleepMillis);
 }
 
+const fight = () => {
+    console.log("currentFren: ")
+    console.log(currentFren)
+
+    isVictory = isVictory(currentFren, currentEnemy)
+    console.log("isVictory: ")
+    console.log(isVictory)
+    this.isLost = !isVictory
+    this.winScore += isVictory
+}
+
+function isVictory(fren, enemy) {
+    return fren.power + enemy.power == 0;
+}
+
 function randomEnemy() {
     const enemySize = Object.keys(enemiesArr).length;
     const id = Math.floor(Math.random() * enemySize);
@@ -88,23 +107,6 @@ function setCurrentFren(fren)  {
 function setCurrentEnemy(enemy)  {
     hoverElem(enemy)
     this.currentEnemy = enemy
-}
-
-function hoverElem(elem) {
-    //elem:hover
-}
-
-const fight = () => {
-    console.log("currentFren: ")
-    console.log(currentFren)
-
-    isVictory = isVictory(currentFren, currentEnemy)
-    console.log("isVictory: ")
-    console.log(isVictory)
-}
-
-function isVictory(fren, enemy) {
-    return fren.power + enemy.power == 0;
 }
 
 
