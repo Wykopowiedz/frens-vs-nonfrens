@@ -1,5 +1,14 @@
 /*
-* @authors: { koliedzy: [@programista4k, @JamnikWallenrod, @grubypajonk, @mniejniz0, @doee, @tomash-pl, @vizori ] }
+* @authors: { koliedzy: [
+                @programista4k,
+                @JamnikWallenrod,
+                @grubypajonk,
+                @mniejniz0,
+                @doee,
+                @tomash-pl,
+                @vizori,
+                @tomhet
+            ]}
 */
 
 
@@ -73,22 +82,22 @@ function randomEnemy() {
     return enemiesArr[id];
 }
 
-function isVictory(fren, enemy) {
-    return fren.power + enemy.power == 0;
-}
-
-function setCurrentEnemy(enemy)  {
-    hoverCroop(enemy)
-    this.currentEnemy = enemy
-}
-
 function setCurrentFren(fren)  {
-    hoverCroop(enemy)
+    hoverElem(fren)
     this.currentFren = fren
 }
 
-function hoverCroop(elem) {
+function setCurrentEnemy(enemy)  {
+    hoverElem(enemy)
+    this.currentEnemy = enemy
+}
+
+function hoverElem(elem) {
     //elem:hover
+}
+
+function isVictory(fren, enemy) {
+    return fren.power + enemy.power == 0;
 }
 
 
