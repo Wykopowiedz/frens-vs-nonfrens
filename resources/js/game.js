@@ -41,8 +41,9 @@ const status = {
 var currentEnemy
 var currentFren
 var currentStatus
-var winScore = 0
-var msBeforeBattle = 5000
+var currentScore = 0
+var startMsBeforeBattle = 5000
+var currentMsBeforeBattle = 5000
 var difficultyRate = 0.1
 
 
@@ -78,27 +79,40 @@ function updateFrontStatus() {
 }
 
 function updateFrontScore() {
-    score_span.innerHTML = winScore
+    score_span.innerHTML = currentScore
 }
 
 
 // backend --------------------------------------------------------------------
 async function game() {
+    onStart()
     while(currentStatus != status.LOST) {
         await battle()
     }
+    onEnd()
+}
+
+function onStart() {
+    setCurrentScore(0)
+    this.currentMsBeforeBattle = this.startMsBeforeBattle
+    setCurrentStatus(status.READY)
+}
+
+function onEnd() {
+
 }
 
 async function battle() {
-    msBeforeBattle = msBeforeBattle - msBeforeBattle * difficultyRate
+    currentFren = null
+    currentMsBeforeBattle = currentMsBeforeBattle - currentMsBeforeBattle * difficultyRate
 
     setCurrentStatus(status.READY)
 
     setCurrentEnemy(randomEnemy())
     console.log("currentEnemy: ", currentEnemy)
 
-    console.log("You got " + msBeforeBattle + " millis to choose a fren.")
-    await sleep(msBeforeBattle)
+    console.log("You got " + currentMsBeforeBattle + " millis to choose a fren.")
+    await sleep(currentMsBeforeBattle)
     console.log("currentFren: ", currentFren)
 
     fight()
@@ -114,8 +128,7 @@ const fight = () => {
 
 function won() {
     console.log("Victory!")
-    this.winScore ++
-    setScore(winScore)
+    setCurrentScore(++currentScore)
     setCurrentStatus(status.VICTORY)
 }
 
@@ -149,7 +162,8 @@ function setCurrentStatus(status) {
     updateFrontStatus()
 }
 
-function setScore(score) {
+function setCurrentScore(score) {
+    this.score = score
     score_span.innerHTML = score
     updateFrontScore()
 }
@@ -157,6 +171,3 @@ function setScore(score) {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
-start_btn.onclick = game()
