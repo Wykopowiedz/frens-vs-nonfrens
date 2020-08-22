@@ -30,47 +30,50 @@ const enemies = {
 const enemiesArr = [enemies.POLKA, enemies.HONKHONK, enemies.CHAD]
 
 const status = {
-    READY:    { type: 'READY', msg: 'Ready?'},
-    FIGHT:    { type: 'FIGHT', msg: 'Fight!'},
-    LOST:     { type: 'LOST', msg: 'You lose.'}
+    READY:    { type: 'READY', msg: 'Ready?', color: 'grey' },
+    FIGHT:    { type: 'FIGHT', msg: 'Fight!', color: 'black' },
+    LOST:     { type: 'LOST', msg: 'You lose.', color: 'red' },
+    VICTORY:  { type: 'VICTORY', msg: 'Win.', color: 'blue' }
 }
 
 
 // var ------------------------------------------------------------------------
 var currentEnemy
 var currentFren
+var currentStatus
 var winScore = 0
-var status
+var msBeforeBattle = 5000
+var difficultyRate = 0.1
 
 
 // frontend--------------------------------------------------------------------
 const status_span = document.getElementById('status');
-const score_span =
+const score_span = document.getElementById('user-score');
 const paper_div = document.getElementById("paper");
 const hammer_div = document.getElementById("hammer");
 const gun_div = document.getElementById("gun");
 
 paper_div.addEventListener('click', function() {
     setCurrentFren(frens.PAPER)
-    setStatus(status.FIGHT)
+    setCurrentStatus(status.FIGHT)
 })
 
 hammer_div.addEventListener('click', function() {
     setCurrentFren(frens.HAMMER)
-    setStatus(status.FIGHT)
+    setCurrentStatus(status.FIGHT)
 })
 
 gun_div.addEventListener('click', function() {
     setCurrentFren(frens.GUN)
-    setStatus(status.FIGHT)
+    setCurrentStatus(status.FIGHT)
 })
 
 function hoverElem(elem) {
     //elem:hover
 }
 
-function upateFrontStatus() {
-    status_span.innerHTML = status.msg
+function updateFrontStatus() {
+    status_span.innerHTML = currentStatus.msg
 }
 
 function updateFrontScore() {
@@ -80,22 +83,22 @@ function updateFrontScore() {
 
 // backend --------------------------------------------------------------------
 async function game() {
-    while(status != status.LOST) {
+    while(currentStatus != status.LOST) {
         await battle()
     }
 }
 
 async function battle() {
-    var sleepMs = 5000
+    msBeforeBattle = msBeforeBattle - msBeforeBattle * difficultyRate
 
-    setStatus(status.READY)
+    setCurrentStatus(status.READY)
 
     setCurrentEnemy(randomEnemy())
     console.log("currentEnemy: ", currentEnemy)
 
-    console.log("You got " + sleepMs + " millis to choose a fren.")
+    console.log("You got " + msBeforeBattle + " millis to choose a fren.")
 
-    await sleep(sleepMs)
+    await sleep(msBeforeBattle)
 
     console.log("currentFren: ", currentFren)
     fight()
@@ -113,12 +116,12 @@ function won() {
     console.log("Victory!")
     this.winScore ++
     setScore(winScore)
+    setCurrentStatus(status.VICTORY)
 }
 
 function lost() {
     console.log("Lost.")
-    setStatus(status.LOST)
-    this.isLost = true
+    setCurrentStatus(status.LOST)
 }
 
 function isFrenWin(fren, enemy) {
@@ -141,8 +144,8 @@ function setCurrentEnemy(enemy)  {
     this.currentEnemy = enemy
 }
 
-function setStatus(status) {
-    this.status = status
+function setCurrentStatus(status) {
+    this.currentStatus = status
     updateFrontStatus()
 }
 
