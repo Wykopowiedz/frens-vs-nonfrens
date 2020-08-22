@@ -14,7 +14,7 @@
 */
 
 
-// const -----------------------------------------------------------
+// model ----------------------------------------------------------------------
 const frens = {
     PAPER:    { type: 'PAPER', power: 1 },
     HAMMER:   { type: 'HAMMER', power: 2 },
@@ -36,14 +36,16 @@ const status = {
 }
 
 
-// var ------------------------------------------------------------
+// var ------------------------------------------------------------------------
 var currentEnemy
 var currentFren
 var winScore = 0
-var isLost = false
+var status
 
 
-// frontend--------------------------------------------------------
+// frontend--------------------------------------------------------------------
+const status_span = document.getElementById('status');
+const score_span =
 const paper_div = document.getElementById("paper");
 const hammer_div = document.getElementById("hammer");
 const gun_div = document.getElementById("gun");
@@ -67,10 +69,18 @@ function hoverElem(elem) {
     //elem:hover
 }
 
+function upateFrontStatus() {
+    status_span.innerHTML = status.msg
+}
 
-// backend --------------------------------------------------------
+function updateFrontScore() {
+    score_span.innerHTML = winScore
+}
+
+
+// backend --------------------------------------------------------------------
 async function game() {
-    while(!isLost) {
+    while(status != status.LOST) {
         await battle()
     }
 }
@@ -102,7 +112,7 @@ const fight = () => {
 function won() {
     console.log("Victory!")
     this.winScore ++
-    document.getElementById('user-score').innerHTML = winScore
+    setScore(winScore)
 }
 
 function lost() {
@@ -132,7 +142,13 @@ function setCurrentEnemy(enemy)  {
 }
 
 function setStatus(status) {
-    document.getElementById('status').innerHTML = status.msg
+    this.status = status
+    updateFrontStatus()
+}
+
+function setScore(score) {
+    score_span.innerHTML = score
+    updateFrontScore()
 }
 
 function sleep(ms) {
