@@ -1,14 +1,16 @@
 /*
-* @authors: { koliedzy: [
-                @programista4k,
-                @JamnikWallenrod,
-                @grubypajonk,
-                @mniejniz0,
-                @doee,
-                @tomash-pl,
-                @vizori,
-                @tomhet
-            ]}
+    @authors: {
+        koliedzy: [
+            @programista4k,
+            @JamnikWallenrod,
+            @grubypajonk,
+            @mniejniz0,
+            @doee,
+            @tomash-pl,
+            @vizori,
+            @tomhet
+        ]
+    }
 */
 
 
@@ -31,6 +33,8 @@ const enemiesArr = [enemies.POLKA, enemies.HONKHONK, enemies.CHAD]
 // var ------------------------------------------------------------
 var currentEnemy
 var currentFren
+var win = 0
+var isLost = false
 
 
 // frontend--------------------------------------------------------
@@ -53,26 +57,20 @@ gun_div.addEventListener('click', function() {
 
 // backend --------------------------------------------------------
 function game() {
+    while(!isLost) {
+        battle()
+    }
+}
 
+function battle() {
     var sleepMillis = 5000
 
     setCurrentEnemy(randomEnemy())
-
-    console.log("currentEnemy")
+    console.log("currentEnemy: ")
     console.log(currentEnemy)
 
     console.log("You got " + sleepMillis + " millis to choose a fren.")
-    console.log("currentFren")
-    console.log(currentFren)
 
-    let fight = () => {
-        console.log("currentFren")
-        console.log(currentFren)
-
-        isVictory = isVictory(currentFren, currentEnemy)
-        console.log("isVictory")
-        console.log(isVictory)
-    }
     setTimeout(fight, sleepMillis);
 }
 
@@ -94,6 +92,15 @@ function setCurrentEnemy(enemy)  {
 
 function hoverElem(elem) {
     //elem:hover
+}
+
+const fight = () => {
+    console.log("currentFren: ")
+    console.log(currentFren)
+
+    isVictory = isVictory(currentFren, currentEnemy)
+    console.log("isVictory: ")
+    console.log(isVictory)
 }
 
 function isVictory(fren, enemy) {
