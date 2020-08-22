@@ -47,6 +47,7 @@ var difficultyRate = 0.1
 
 
 // frontend--------------------------------------------------------------------
+const start_btn = document.getElementById("start-game");
 const status_span = document.getElementById('status');
 const score_span = document.getElementById('user-score');
 const paper_div = document.getElementById("paper");
@@ -97,10 +98,9 @@ async function battle() {
     console.log("currentEnemy: ", currentEnemy)
 
     console.log("You got " + msBeforeBattle + " millis to choose a fren.")
-
     await sleep(msBeforeBattle)
-
     console.log("currentFren: ", currentFren)
+
     fight()
 }
 
@@ -159,4 +159,4 @@ function sleep(ms) {
 }
 
 
-game()
+start_btn.onclick = game()
