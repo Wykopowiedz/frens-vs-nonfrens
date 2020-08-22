@@ -53,7 +53,6 @@ function game() {
     console.log(currentEnemy)
 
     console.log("You got " + sleepMillis + " millis to choose a fren.")
-    sleep(sleepMillis)
     console.log("currentFren")
     console.log(currentFren)
 
@@ -90,11 +89,6 @@ function setCurrentFren(fren)  {
 
 function hoverCroop(elem) {
     //elem:hover
-}
-
-async function sleep(delay) {
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay);
 }
 
 
