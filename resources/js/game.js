@@ -1,3 +1,8 @@
+/*
+* @authors: { koliedzy: [@programista4k, @JamnikWallenrod, @grubypajonk, @mniejniz0, @doee, @tomash-pl, @vizori ] }
+*/
+
+
 // const -----------------------------------------------------------
 const frens = {
     PAPER:    { type: 'PAPER', power: 1 },
@@ -52,7 +57,7 @@ function game() {
     console.log("currentFren")
     console.log(currentFren)
 
-    isVictory = fight(fren, currentEnemy)
+    isVictory = fight(currentFren, currentEnemy)
     console.log("isVictory")
     console.log(isVictory)
 }
