@@ -1,6 +1,6 @@
 /*
     @authors: {
-        koliedzy: [
+        frens: [
             @programista4k,
             @JamnikWallenrod,
             @grubypajonk,
@@ -62,34 +62,32 @@ function hoverElem(elem) {
 // backend --------------------------------------------------------
 function game() {
     while(!isLost) {
-        battle()
+        await battle()
     }
 }
 
-function battle() {
-    var sleepMillis = 5000
+async function battle() {
+    var sleepMs = 5000
 
     setCurrentEnemy(randomEnemy())
-    console.log("currentEnemy: ")
-    console.log(currentEnemy)
+    console.log("currentEnemy: ", currentEnemy)
 
-    console.log("You got " + sleepMillis + " millis to choose a fren.")
+    console.log("You got " + sleepMs + " millis to choose a fren.")
 
-    setTimeout(fight, sleepMillis);
+    await sleep(sleepMs)
+    fight()
 }
 
 const fight = () => {
-    console.log("currentFren: ")
-    console.log(currentFren)
+    console.log("currentFren: ", currentFren)
 
-    isVictory = isVictory(currentFren, currentEnemy)
-    console.log("isVictory: ")
-    console.log(isVictory)
+    const isVictory = checkIsVictory(currentFren, currentEnemy)
+    console.log("isVictory: ", isVictory)
     this.isLost = !isVictory
     this.winScore += isVictory
 }
 
-function isVictory(fren, enemy) {
+function checkIsVictory(fren, enemy) {
     return fren.power + enemy.power == 0;
 }
 
@@ -107,6 +105,10 @@ function setCurrentFren(fren)  {
 function setCurrentEnemy(enemy)  {
     hoverElem(enemy)
     this.currentEnemy = enemy
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
